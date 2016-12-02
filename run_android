@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+cd android
+./gradlew assembleDebug
+cd ..
+adb install -r android/app/build/outputs/apk/app-debug.apk
+adb reverse tcp:8081 tcp:8081
+adb reverse tcp:8097 tcp:8097
+react-native start
