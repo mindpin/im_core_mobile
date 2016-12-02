@@ -1,0 +1,3 @@
+rootProject.name = 'im_core_mobile'
+
+include ':app'
