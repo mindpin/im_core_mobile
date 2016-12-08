@@ -3,12 +3,15 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  Alert,
   View
 } from 'react-native';
 
 import InputItem from 'antd-mobile/lib/input-item'
 import Button from 'antd-mobile/lib/button'
 import { createForm } from 'rc-form'
+
+import API from 'API'
 
 
 const styles = StyleSheet.create({
@@ -20,8 +23,32 @@ const styles = StyleSheet.create({
 class SignIn extends Component {
   sign_in() {
     let data = this.props.form.getFieldsValue(['email', 'password'])
-    this.props.navigator.push({id: "UserDetail", params: {}})
-    console.log(data);
+
+    let post_data = {
+      eamil: data.email,
+      password: data.password
+    }
+
+    API.auth.sign_in(post_data).done((res_data, res)=>{
+      console.log(res_data);
+      // if(res_data.retCode == 1){
+      //   AsyncStorage.setItem(StorageKeys.SIGN_TOKEN, JSON.stringify(res_data), (error)=>{
+      //     this.get_loading().dismiss()
+      //     this.props.my_center.state.isReload = true
+      //     NavigatorUtils.pop_to_route(
+      //       this.props.navigator,
+      //       {id: 'Dashboard'}
+      //     )
+      //   })
+      // }else{
+      //   this.get_loading().dismiss()
+      //   Alert.alert('错误提示', res_data.retMsg, [{ text: '确定'}])
+      // }
+    })
+
+
+    // this.props.navigator.push({id: "UserDetail", params: {}})
+    // console.log(data);
   }
 
   render() {

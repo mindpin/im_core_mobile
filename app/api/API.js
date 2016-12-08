@@ -7,10 +7,10 @@ import {
 } from 'react-native'
 
 
-import register from 'im_core_mobile/app/api/register'
+import auth from 'im_core_mobile/app/api/auth'
 
 
 
 export default {
-  register
+  auth,
 }
