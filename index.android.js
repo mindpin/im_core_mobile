@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
 } from 'react-native';
+
 import app from 'im_core_mobile/app/app.js'
 
 
@@ -49,5 +50,4 @@ import app from 'im_core_mobile/app/app.js'
 //   },
 // });
 
->>>>>>> 4f25d2d939d71486dda5cd026cbfa93bfd456bc5
 AppRegistry.registerComponent('im_core_mobile', () => app);

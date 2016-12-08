@@ -14,6 +14,9 @@ import { createForm } from 'rc-form'
 const styles = StyleSheet.create({
   input_item: {
     marginBottom: 20
+  },
+  button_style: {
+    marginBottom: 10
   }
 });
 
@@ -47,6 +50,7 @@ class Edit extends Component {
         <View>
           <Button 
             type="primary"
+            style={styles.button_style}
             onClick={e => this.edit()}
           > 确认修改 </Button>
           <Button 

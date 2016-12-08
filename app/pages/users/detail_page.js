@@ -12,6 +12,9 @@ import Button from 'antd-mobile/lib/button'
 const styles = StyleSheet.create({
   input_item: {
     marginBottom: 20
+  },
+  button_style: {
+    marginBottom: 10
   }
 });
 
@@ -44,8 +47,14 @@ export default class Detail extends Component {
         <View>
           <Button 
             type="primary"
+            style={styles.button_style}
             onClick={e => this.props.navigator.push({id: "UserEdit", params: {}})}
           > 修改个人信息 </Button>
+          <Button 
+            type="primary"
+            style={styles.button_style}
+            onClick={e => this.props.navigator.push({id: "FirstPage", params: {}})}
+          > 学习 </Button>
           <Button 
             type="primary"
           > 退出 </Button>
