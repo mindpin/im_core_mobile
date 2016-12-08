@@ -1,3 +1,14 @@
+# 运行项目
+```
+
+git clone (Clone or download 下的 url)
+
+npm install
+
+react-native run-android
+
+```
+# apk 编译说明
 ```
 cd im_core_mobile
 cd android
