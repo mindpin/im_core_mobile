@@ -7,7 +7,8 @@ import {
 } from 'react-native'
 
 
-import register from 'ares/app/api/register'
+import register from 'im_core_mobile/app/api/register'
+
 
 
 export default {

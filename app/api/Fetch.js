@@ -9,7 +9,9 @@ import {
   AsyncStorage,
 } from 'react-native'
 
-import StorageKeys from 'ares/app/constants/storage_keys'
+
+import StorageKeys from 'im_core_mobile/app/constants/storage_keys'
+
 
 export default {
 

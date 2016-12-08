@@ -1,4 +1,4 @@
-import build_url from 'ares/app/api/build_url'
+import build_url from 'im_core_mobile/app/api/build_url'
 import APIFetch from 'APIFetch'
 
 
@@ -21,3 +21,4 @@ export default {
     //     Alert.alert('错误提示', res_data_json.retMsg, [{ text: '确定'}])
     //   }
     // })
+
