@@ -16,7 +16,7 @@ import API from 'API'
 
 const styles = StyleSheet.create({
   input_item: {
-    marginBottom: 20
+    marginBottom: 20,
   }
 });
 
@@ -25,30 +25,19 @@ class SignIn extends Component {
     let data = this.props.form.getFieldsValue(['email', 'password'])
 
     let post_data = {
-      eamil: data.email,
+      email: data.email,
       password: data.password
     }
 
     API.auth.sign_in(post_data).done((res_data, res)=>{
-      console.log(res_data);
-      // if(res_data.retCode == 1){
-      //   AsyncStorage.setItem(StorageKeys.SIGN_TOKEN, JSON.stringify(res_data), (error)=>{
-      //     this.get_loading().dismiss()
-      //     this.props.my_center.state.isReload = true
-      //     NavigatorUtils.pop_to_route(
-      //       this.props.navigator,
-      //       {id: 'Dashboard'}
-      //     )
-      //   })
-      // }else{
-      //   this.get_loading().dismiss()
-      //   Alert.alert('错误提示', res_data.retMsg, [{ text: '确定'}])
-      // }
+      if(res_data.valid_info == "successfully"){
+       this.props.navigator.push({id: "UserDetail", params: {}})
+      }else{
+        Alert.alert('错误提示', res_data.valid_info, [{ text: '确定'}])
+      }
     })
 
 
-    // this.props.navigator.push({id: "UserDetail", params: {}})
-    // console.log(data);
   }
 
   render() {
@@ -76,6 +65,7 @@ class SignIn extends Component {
         <View>
           <Button 
             type="primary"
+            style={styles.buttom_style}
             onClick={e => this.sign_in()}
           > 登录 </Button>
         </View>
