@@ -4,17 +4,21 @@ import {
     Navigator,
 } from 'react-native'
 import ErrorPage    from 'im_core_mobile/app/error_page'
-import StudyPage    from 'im_core_mobile/app/study_page'
+import StudyPage    from 'im_core_mobile/app/pages/dashboard/study_page'
 import SignIn       from 'im_core_mobile/app/pages/users/sign_in_page'
-import UserDetail   from 'im_core_mobile/app/pages/users/detail_page'
+import UserDetail   from 'im_core_mobile/app/pages/dashboard/detail_page'
 import UserEdit     from 'im_core_mobile/app/pages/users/edit_page'
+import FaqPage      from 'im_core_mobile/app/pages/dashboard/faq_page'
+import Dashboard    from 'im_core_mobile/app/pages/dashboard'
 
 
 const ROUTE_MAP = {
-  "StudyPage"   :           { component: StudyPage } ,
-  "SignIn"      :           {  component: SignIn,          params: {}},
-  "UserDetail"  :           {  component: UserDetail,          params: {}},
-  "UserEdit"    :           {  component: UserEdit,          params: {}},
+  "StudyPage"   :           { component: StudyPage },
+  "FaqPage"     :           { component: FaqPage },
+  "Dashboard"     :         { component: Dashboard },
+  "SignIn"      :           { component: SignIn,          params: {} },
+  "UserDetail"  :           { component: UserDetail,      params: {} },
+  "UserEdit"    :           { component: UserEdit,        params: {} },
 
 };
 
