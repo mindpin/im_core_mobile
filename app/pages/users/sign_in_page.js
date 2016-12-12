@@ -36,8 +36,6 @@ class SignIn extends Component {
         Alert.alert('错误提示', res_data.valid_info, [{ text: '确定'}])
       }
     })
-
-
   }
 
   render() {
@@ -47,7 +45,7 @@ class SignIn extends Component {
         <View>
           <InputItem 
             {...getFieldProps('email', {
-              initialValue: '',
+              initialValue: 'user-001@test.com',
             })}
             style={styles.input_item}
             placeholder="邮箱"
@@ -57,6 +55,7 @@ class SignIn extends Component {
             {...getFieldProps('password',{
               initialValue: '',
             })}
+            type = 'password'
             style={styles.input_item}
             placeholder="密码"
           >

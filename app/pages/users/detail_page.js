@@ -1,65 +1,101 @@
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import React from 'react';
+import { Text, View } from 'react-native';
 
-import InputItem from 'antd-mobile/lib/input-item'
+import BasePage from 'im_core_mobile/app/base_page'
+
 import Button from 'antd-mobile/lib/button'
+import InputItem from 'antd-mobile/lib/input-item'
+import Navbar from 'im_core_mobile/app/component/nav_bar'
+import API from 'API'
 
-const styles = StyleSheet.create({
-  input_item: {
-    marginBottom: 20
-  },
-  button_style: {
-    marginBottom: 10
+class DetailPage extends BasePage {
+  constructor(props) {
+    super(props);
+    this.state = {
+      organizations : [],
+      name : "",
+      email: "",
+    }
+   }
+
+  componentDidMount() {
+    API.auth.get_user_detail().done((res_data, res)=>{
+      this.setState({
+        organizations: res_data['organizations'],
+        name: res_data['name'],
+        email: res_data['email'],
+      }) 
+    })
+
   }
-});
 
-export default class Detail extends Component {
+  sign_out(){
+    API.auth.sign_out().done((res_data, res)=>{
+
+      if(res_data.status_code == "200"){
+       this.props.navigator.push({id: "SignIn", params: {}})
+      }
+    })
+
+  }
+
+
+
   render() {
-    return (
-      <View>
-        <View>
+    this.doms_ary = []; 
+    for(var i=0; i<this.state.organizations.length; i++){
+        this.doms_ary.push(
+        <InputItem
+        type="org"
+        value={this.state.organizations[i]}>
+        组织机构:
+        </InputItem>
+        )
+    };
+
+        return (
+          <View>
+          <Navbar titleContent={<Text style={{color: "#fff", fontSize: 20}}>用户信息</Text>}/>
+
           <InputItem 
-            style={styles.input_item}
-            value="alan814@163.com"
-            editable={false}
-          >邮箱</InputItem>
-          <InputItem 
-            style={styles.input_item}
-            value="Alan"
-            editable={false}
-          >用户名</InputItem>
-          <InputItem 
-            style={styles.input_item}
-            value="机构一"
-            editable={false}
-          >组织机构</InputItem>
-          <InputItem 
-            style={styles.input_item}
-            value="机构二"
-            editable={false}
-          >组织机构</InputItem>
+            value={this.state.email}
+          >
+          邮箱:
+          </InputItem>
+
+          <InputItem
+            value={this.state.name}
+          >
+          用户名:
+          </InputItem>
+      
+          {this.doms_ary}
+
+          <Button
+            type="primary"
+             onClick={e => this.props.navigator.push({id: "UserEdit"})}
+          >
+          修改个人信息
+          </Button>
+
+          <Button
+            type="primary"
+             onClick={e => this.sign_out()}
+          >
+          登出
+          </Button>
+
+          <Button
+            type="primary"
+             onClick={e => this.props.navigator.push({id: "StudyPage"})}
+          >
+          跳转至学习页面
+          </Button>
+      
+        
         </View>
-        <View>
-          <Button 
-            type="primary"
-            style={styles.button_style}
-            onClick={e => this.props.navigator.push({id: "UserEdit", params: {}})}
-          > 修改个人信息 </Button>
-          <Button 
-            type="primary"
-            style={styles.button_style}
-            onClick={e => this.props.navigator.push({id: "FirstPage", params: {}})}
-          > 学习 </Button>
-          <Button 
-            type="primary"
-          > 退出 </Button>
-        </View>
-      </View>
-    );
-  }
-}
+
+          );
+    }
+};
+export default DetailPage

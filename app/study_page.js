@@ -6,8 +6,8 @@ import BasePage from 'im_core_mobile/app/base_page'
 
 import Button from 'antd-mobile/lib/button'
 import InputItem from 'antd-mobile/lib/input-item'
-// navbar 不能用
-import NavbarBtn from 'antd-mobile/lib/button'
+import Navbar from 'im_core_mobile/app/component/nav_bar'
+
 class StudyPage extends BasePage {
   constructor(props) {
     super(props);
@@ -16,7 +16,7 @@ class StudyPage extends BasePage {
   render(){
     return(
           <View>
-          <NavbarBtn>学习</NavbarBtn>
+          <Navbar titleContent={<Text style={{color: "#fff", fontSize: 20}}>学习</Text>}/>
 
           <Text>参考资料</Text>
           <InputItem 

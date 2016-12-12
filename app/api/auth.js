@@ -3,13 +3,32 @@ import APIFetch from 'APIFetch'
 
 
 const sign_in = (data) => {
-  let url = build_url('/admin/users/sign_in')
+  let url = build_url('/admin/users/do_sign_in')
+  return APIFetch.post(url, data)
+}
+
+const update_user = (data) => {
+  let url = build_url('/admin/users/update_user')
+  return APIFetch.post(url, data)
+}
+
+const get_user_detail = (data) => {
+  let url = build_url('/admin/users/get_user_detail')
+  return APIFetch.get(url, data)
+}
+
+const sign_out = (data) => {
+  let url = build_url('/admin/users/do_sign_out')
   return APIFetch.post(url, data)
 }
 
 
 export default {
   sign_in,
+  sign_out,
+  update_user,
+  get_user_detail,
+
 }
 
 

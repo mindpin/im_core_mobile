@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
           height: 64,
         }
       }),
-      backgroundColor: '#47bae4',
+      backgroundColor: '#108EE9',
     },
     status: {
       ...Platform.select({
