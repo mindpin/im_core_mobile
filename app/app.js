@@ -3,7 +3,6 @@ import React from 'react'
 import {
     Navigator,
 } from 'react-native'
-import FirstPage    from 'im_core_mobile/app/first_page'
 import ErrorPage    from 'im_core_mobile/app/error_page'
 import StudyPage    from 'im_core_mobile/app/study_page'
 import SignIn       from 'im_core_mobile/app/pages/users/sign_in_page'
@@ -12,11 +11,10 @@ import UserEdit     from 'im_core_mobile/app/pages/users/edit_page'
 
 
 const ROUTE_MAP = {
-  "FirstPage"   :           { component: FirstPage },
   "StudyPage"   :           { component: StudyPage } ,
-  "SignIn"      :           {index: 0,  component: SignIn,          params: {}},
-  "UserDetail"  :           {index: 1,  component: UserDetail,          params: {}},
-  "UserEdit"    :           {index: 2,  component: UserEdit,          params: {}},
+  "SignIn"      :           {  component: SignIn,          params: {}},
+  "UserDetail"  :           {  component: UserDetail,          params: {}},
+  "UserEdit"    :           {  component: UserEdit,          params: {}},
 
 };
 
