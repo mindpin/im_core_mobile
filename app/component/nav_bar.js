@@ -68,10 +68,6 @@ const styles = StyleSheet.create({
 
 })
 
-/**
-*  钱包页面的顶部导航条，会逐渐完善成通用组件
-*  by fushang318
-*/
 export default class NavBar extends React.Component {
   constructor(props) {
     super(props)
@@ -142,5 +138,4 @@ export default class NavBar extends React.Component {
   }
 }
 
-//
-//
+
