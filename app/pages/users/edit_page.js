@@ -64,7 +64,7 @@ class Edit extends Component {
     API.auth.update_user(data).done((res_data, res)=>{
       if(res_data.status_code == "200"){
         this.get_loading().dismiss()
-        this.props.navigator.pop()
+        this.props.navigator.replace({id: "Dashboard"})
       }else{
         this.get_loading().dismiss()
         Alert.alert('错误提示', "修改失败", [{ text: '确定'}])
