@@ -9,6 +9,7 @@ import Navbar from 'im_core_mobile/app/component/nav_bar'
 import API from 'API'
 
 import Dashboard from 'im_core_mobile/app/pages/dashboard'
+import Loading from 'im_core_mobile/app/component/loading'
 
 class DetailPage extends BasePage {
   constructor(props) {
@@ -21,7 +22,9 @@ class DetailPage extends BasePage {
    }
 
   componentDidMount() {
+    this.get_loading().show()
     API.auth.get_user_detail().done((res_data, res)=>{
+      this.get_loading().dismiss()
       this.setState({
         organizations: res_data['organizations'],
         name: res_data['name'],
@@ -32,15 +35,19 @@ class DetailPage extends BasePage {
   }
 
   sign_out(){
+    this.get_loading().show()
     API.auth.sign_out().done((res_data, res)=>{
       if(res_data.status_code == "200"){
-       this.props.navigator.push({id: "SignIn", params: {}})
+        this.get_loading().dismiss()
+        this.props.navigator.push({id: "SignIn", params: {}})
       }
     })
 
   }
 
-
+  get_loading() {
+    return this.refs['loading']
+  }
 
   render() {
     this.doms_ary = []; 
@@ -86,6 +93,7 @@ class DetailPage extends BasePage {
         >
           登出
         </Button>
+        <Loading ref={'loading'} />
       </View>
     );
   }

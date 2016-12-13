@@ -9,6 +9,8 @@ import InputItem from 'antd-mobile/lib/input-item'
 import Navbar from 'im_core_mobile/app/component/nav_bar'
 import API from 'API'
 
+import Loading from 'im_core_mobile/app/component/loading'
+
 class FaqPage extends BasePage {
   constructor(props) {
     super(props);
@@ -18,8 +20,9 @@ class FaqPage extends BasePage {
   }
 
   componentDidMount() {
+    this.get_loading().show()  
     API.auth.get_faq_detail().done((res_data, res)=>{
-      console.log(res_data)
+      this.get_loading().dismiss()
       this.setState({
         faqs: res_data['faqs'],
       }) 
@@ -27,10 +30,13 @@ class FaqPage extends BasePage {
 
   }
 
+  get_loading() {
+    return this.refs['loading']
+  }
+
   render(){
     this.doms_ary = []; 
     tag_s = '';
-    console.log(this.state.faqs.length);
     for(var i=0; i<this.state.faqs.length; i++){
       for(var j=0; j<this.state.faqs[i].tags.length; j++){
         tag_s += this.state.faqs[i].tags[j] + ","
@@ -46,11 +52,14 @@ class FaqPage extends BasePage {
           </InputItem>
         </View>
       )
+      tag_s = '';
     }
+    
     return(
       <View>
         <Navbar titleContent={<Text style={{color: "#fff", fontSize: 20}}>问答</Text>}/>
         {this.doms_ary}
+        <Loading ref={'loading'} />
       </View>
     )
   }

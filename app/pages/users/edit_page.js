@@ -10,6 +10,7 @@ import InputItem from 'antd-mobile/lib/input-item'
 import Button from 'antd-mobile/lib/button'
 import { createForm } from 'rc-form'
 import API from 'API'
+import Loading from 'im_core_mobile/app/component/loading'
 
 
 
@@ -31,8 +32,14 @@ class Edit extends Component {
     }
   }
 
+  get_loading() {
+    return this.refs['loading']
+  }
+
   componentDidMount() {
+    this.get_loading().show()  
     API.auth.get_user_detail().done((res_data, res)=>{
+      this.get_loading().dismiss()
       this.setState({
         name: res_data['name'],
         password: res_data['password'],
@@ -41,12 +48,15 @@ class Edit extends Component {
   }
 
   edit() {
+    this.get_loading().show()
     let data = this.props.form.getFieldsValue(['name', 'password'])
 
     API.auth.update_user(data).done((res_data, res)=>{
       if(res_data.status_code == "200"){
-       this.props.navigator.push({id: "Dashboard", params: {}})
+        this.get_loading().dismiss()
+        this.props.navigator.push({id: "Dashboard", params: {}})
       }else{
+        this.get_loading().dismiss()
         Alert.alert('错误提示', "修改失败", [{ text: '确定'}])
       }
     })
@@ -55,7 +65,10 @@ class Edit extends Component {
   render() {
     const { getFieldProps } = this.props.form
     return (
-      <View>
+      <View style={{
+        backgroundColor: "#fff",
+        flex: 1,
+      }}>
         <View>
           <InputItem 
             {...getFieldProps('name', {
@@ -83,6 +96,7 @@ class Edit extends Component {
             onClick={e => this.props.navigator.push({id: 'Dashboard', params: {}})}
           > 取消 </Button>
         </View>
+        <Loading ref={'loading'} />
       </View>
     );
   }

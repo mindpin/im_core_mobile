@@ -10,6 +10,7 @@ import {
 import InputItem from 'antd-mobile/lib/input-item'
 import Button from 'antd-mobile/lib/button'
 import { createForm } from 'rc-form'
+import Loading from 'im_core_mobile/app/component/loading'
 
 import API from 'API'
 
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
 
 class SignIn extends Component {
   sign_in() {
+    this.get_loading().show()
     let data = this.props.form.getFieldsValue(['email', 'password'])
 
     let post_data = {
@@ -31,11 +33,17 @@ class SignIn extends Component {
 
     API.auth.sign_in(post_data).done((res_data, res)=>{
       if(res_data.valid_info == "successfully"){
-       this.props.navigator.push({id: "Dashboard", params: {}})
+        this.get_loading().dismiss()
+        this.props.navigator.push({id: "Dashboard", params: {}})
       }else{
+        this.get_loading().dismiss()
         Alert.alert('错误提示', res_data.valid_info, [{ text: '确定'}])
       }
     })
+  }
+
+  get_loading() {
+    return this.refs['loading']
   }
 
   render() {
@@ -68,6 +76,7 @@ class SignIn extends Component {
             onClick={e => this.sign_in()}
           > 登录 </Button>
         </View>
+        <Loading ref={'loading'} />
       </View>
     );
   }

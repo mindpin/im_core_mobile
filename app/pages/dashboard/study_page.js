@@ -9,6 +9,8 @@ import InputItem from 'antd-mobile/lib/input-item'
 import Navbar from 'im_core_mobile/app/component/nav_bar'
 import API from 'API'
 
+import Loading from 'im_core_mobile/app/component/loading'
+
 class StudyPage extends BasePage {
   constructor(props) {
     super(props);
@@ -18,12 +20,18 @@ class StudyPage extends BasePage {
   }
 
   componentDidMount() {
+    this.get_loading().show()  
     API.auth.get_ref_detail().done((res_data, res)=>{
+      this.get_loading().dismiss()
       this.setState({
         references: res_data['references'],
       }) 
     })
 
+  }
+
+  get_loading() {
+    return this.refs['loading']
   }
 
   render(){
@@ -45,12 +53,14 @@ class StudyPage extends BasePage {
           </InputItem>
         </View>
       )
+      tag_s = '';
     }
 
     return(
       <View>
         <Navbar titleContent={<Text style={{color: "#fff", fontSize: 20}}>学习</Text>}/>
         {this.doms_ary}
+        <Loading ref={'loading'} />
       </View>
     )
   }
