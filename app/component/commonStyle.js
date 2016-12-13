@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const colors = {
   MAIN_COLOR: 'white',
-  TABBAR_COLOR:'black',
+  TABBAR_COLOR:'#F3F3F3',
   NAVIBAR_COLOR:'#383838',
   MAIN_BACKGROUND_COLOR: '#F5F5F9',//背景灰色
   GRAY_COLOR: '#DADADA',

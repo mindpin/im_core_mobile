@@ -16,8 +16,21 @@ import API from 'API'
 
 
 const styles = StyleSheet.create({
+  root: {
+    backgroundColor: "#fff",
+    flex: 1,
+  },
   input_item: {
-    marginBottom: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  button_style: {
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
   }
 });
 
@@ -49,7 +62,7 @@ class SignIn extends Component {
   render() {
     const { getFieldProps } = this.props.form
     return (
-      <View>
+      <View style={styles.root}>
         <View>
           <InputItem 
             {...getFieldProps('email', {
@@ -72,7 +85,7 @@ class SignIn extends Component {
         <View>
           <Button 
             type="primary"
-            style={styles.buttom_style}
+            style={styles.button_style}
             onClick={e => this.sign_in()}
           > 登录 </Button>
         </View>

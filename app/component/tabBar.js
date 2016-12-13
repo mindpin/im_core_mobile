@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: 'row',
     alignItems: 'center',
-    borderTopWidth: 1,
     backgroundColor: CommonStyle.TABBAR_COLOR,
   },
   touchableContainer: {
@@ -26,22 +25,19 @@ const styles = StyleSheet.create({
     height: 25
   },
   text: {
-    fontSize:10
+    fontSize: 15
   }
 });
 
 
 const TAB_BAR_COLOR1 = [
-  '#ce9f66','#ffffff','#ffffff','#ffffff'
+  '#3399FF','#787878','#787878'
 ];
 const TAB_BAR_COLOR2 = [
-  '#ffffff','#ce9f66','#ffffff','#ffffff'
+  '#787878','#3399FF','#787878'
 ];
 const TAB_BAR_COLOR3 = [
-  '#ffffff','#ffffff','#ce9f66','#ffffff'
-];
-const TAB_BAR_COLOR4 = [
-  '#ffffff','#ffffff','#ffffff','#ce9f66'
+  '#787878','#787878','#3399FF'
 ];
 
 class TabBar extends React.Component {
@@ -72,11 +68,6 @@ class TabBar extends React.Component {
       this.setState({color_array: TAB_BAR_COLOR3});
       goToPage(2);
     }
-    if (index == 3) {
-      this.setState({color_array: TAB_BAR_COLOR4});
-      goToPage(3);
-    }
-
 
   }
 

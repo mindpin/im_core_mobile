@@ -11,17 +11,33 @@ import API from 'API'
 
 import Loading from 'im_core_mobile/app/component/loading'
 
-var styles = StyleSheet.create({
+console.disableYellowBox = true;
+
+const styles = StyleSheet.create({
+  root: {
+    backgroundColor: "#fff",
+    flex: 1,
+  },
   references_name: {
     flex: 1, 
-    paddingTop: 22,
     fontSize: 20,
+    marginTop: 5,
+    marginBottom: 5,
   },
   references_tags: {
     flex: 1, 
-    paddingTop: 22,
     fontSize: 15,
+    marginTop:5,
+    marginBottom: 5,
+  },
+  listview_view_style: {
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    borderBottomWidth: 0.5,
   }
+
 });
 
 
@@ -51,12 +67,12 @@ class StudyPage extends BasePage {
 
   render(){
     return(
-      <View>
+      <View style={styles.root}>
         <Navbar titleContent={<Text style={{color: "#fff", fontSize: 20}}>学习</Text>}/>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={(rowData) => 
-            <View>
+            <View style={styles.listview_view_style}>
               <Text style={styles.references_name}>{rowData.name}</Text>
               <Text style={styles.references_tags}>{rowData.tags}</Text>
             </View>

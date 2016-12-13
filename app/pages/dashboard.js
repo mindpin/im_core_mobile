@@ -28,9 +28,9 @@ const styles = StyleSheet.create({
 
 //tabbar图片资源
 const TAB_BAR_RESOURCES = [
-  [require('im_core_mobile/app/assets/image/qianbao_unselected.png'), require('im_core_mobile/app/assets/image/qianbao_selected.png')],
-  [require('im_core_mobile/app/assets/image/shenghuo_unselected.png'), require('im_core_mobile/app/assets/image/shenghuo_selected.png')],
-  [require('im_core_mobile/app/assets/image/zhushou_unselected.png'), require('im_core_mobile/app/assets/image/zhushou_selected.png')],
+  [],
+  [],
+  [],
 ];
 
 const TAB_BAR_TITLE = [

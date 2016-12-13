@@ -15,11 +15,21 @@ import Loading from 'im_core_mobile/app/component/loading'
 
 
 const styles = StyleSheet.create({
+  root: {
+    backgroundColor: "#fff",
+    flex: 1,
+  },
   input_item: {
-    marginBottom: 20
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
   },
   button_style: {
-    marginBottom: 10
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
   }
 });
 
@@ -65,10 +75,7 @@ class Edit extends Component {
   render() {
     const { getFieldProps } = this.props.form
     return (
-      <View style={{
-        backgroundColor: "#fff",
-        flex: 1,
-      }}>
+      <View style={styles.root}>
         <View>
           <InputItem 
             {...getFieldProps('name', {
@@ -93,6 +100,7 @@ class Edit extends Component {
           > 确认修改 </Button>
           <Button 
             type="primary"
+            style={styles.button_style}
             onClick={e => this.props.navigator.pop()}
           > 取消 </Button>
         </View>
