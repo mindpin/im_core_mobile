@@ -34,7 +34,7 @@ class SignIn extends Component {
     API.auth.sign_in(post_data).done((res_data, res)=>{
       if(res_data.valid_info == "successfully"){
         this.get_loading().dismiss()
-        this.props.navigator.push({id: "Dashboard", params: {}})
+        this.props.navigator.replace({id: "Dashboard", params: {}})
       }else{
         this.get_loading().dismiss()
         Alert.alert('错误提示', res_data.valid_info, [{ text: '确定'}])

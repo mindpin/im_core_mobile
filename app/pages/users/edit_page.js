@@ -54,7 +54,7 @@ class Edit extends Component {
     API.auth.update_user(data).done((res_data, res)=>{
       if(res_data.status_code == "200"){
         this.get_loading().dismiss()
-        this.props.navigator.push({id: "Dashboard", params: {}})
+        this.props.navigator.pop()
       }else{
         this.get_loading().dismiss()
         Alert.alert('错误提示', "修改失败", [{ text: '确定'}])
@@ -93,7 +93,7 @@ class Edit extends Component {
           > 确认修改 </Button>
           <Button 
             type="primary"
-            onClick={e => this.props.navigator.push({id: 'Dashboard', params: {}})}
+            onClick={e => this.props.navigator.pop()}
           > 取消 </Button>
         </View>
         <Loading ref={'loading'} />
