@@ -39,7 +39,7 @@ class DetailPage extends BasePage {
     API.auth.sign_out().done((res_data, res)=>{
       if(res_data.status_code == "200"){
         this.get_loading().dismiss()
-        this.props.navigator.push({id: "SignIn", params: {}})
+        this.props.navigator.replace({id: "SignIn", params: {}})
       }
     })
 
