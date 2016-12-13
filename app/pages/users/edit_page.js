@@ -80,7 +80,7 @@ class Edit extends Component {
           > 确认修改 </Button>
           <Button 
             type="primary"
-            onClick={e => this.props.navigator.push({id: 'Dashboard', params: {}})}
+            onClick={e => this.props.navigator.replace({id: 'Dashboard', params: {}})}
           > 取消 </Button>
         </View>
       </View>
