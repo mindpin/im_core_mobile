@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ListView, StyleSheet } from 'react-native';
 
 
 import BasePage from 'im_core_mobile/app/component/base_page'
@@ -9,48 +9,52 @@ import InputItem from 'antd-mobile/lib/input-item'
 import Navbar from 'im_core_mobile/app/component/nav_bar'
 import API from 'API'
 
+var styles = StyleSheet.create({
+  faq_question: {
+    flex: 1, 
+    paddingTop: 22,
+    fontSize: 20,
+  },
+  faq_tags: {
+    flex: 1, 
+    paddingTop: 22,
+    fontSize: 15,
+  }
+});
+
 class FaqPage extends BasePage {
   constructor(props) {
     super(props);
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      faqs : [],
-    }
+      dataSource: ds.cloneWithRows(["1", "2", "3", "4", "5"]),
+    };
   }
 
   componentDidMount() {
     API.auth.get_faq_detail().done((res_data, res)=>{
       console.log(res_data)
+      var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       this.setState({
-        faqs: res_data['faqs'],
+        dataSource: ds.cloneWithRows(res_data['faqs']),
       }) 
     })
 
   }
 
   render(){
-    this.doms_ary = []; 
-    tag_s = '';
-    console.log(this.state.faqs.length);
-    for(var i=0; i<this.state.faqs.length; i++){
-      for(var j=0; j<this.state.faqs[i].tags.length; j++){
-        tag_s += this.state.faqs[i].tags[j] + ","
-      }
-      this.doms_ary.push(
-        <View key={i}>
-          <Text key={this.state.faqs[i].question}>{this.state.faqs[i].question}</Text>
-          <InputItem 
-            value={tag_s}
-            key={i}
-            editable={false}
-          >
-          </InputItem>
-        </View>
-      )
-    }
     return(
       <View>
         <Navbar titleContent={<Text style={{color: "#fff", fontSize: 20}}>问答</Text>}/>
-        {this.doms_ary}
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => 
+            <View>
+              <Text style={styles.faq_question}>{rowData.question}</Text>
+              <Text style={styles.faq_tags}>{rowData.tags}</Text>
+            </View>
+          }
+        />
       </View>
     )
   }
