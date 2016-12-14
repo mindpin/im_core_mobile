@@ -77,6 +77,7 @@ class DetailPage extends BasePage {
           style={styles.input_item}
           key={i}
           value={this.state.organizations[i]}
+          editable={false}
         >
           组织机构:
         </InputItem>
@@ -89,6 +90,7 @@ class DetailPage extends BasePage {
         <InputItem 
           value={this.state.email}
           style={styles.input_item}
+          editable={false}
         >
         邮箱:
         </InputItem>
@@ -96,6 +98,7 @@ class DetailPage extends BasePage {
         <InputItem
           value={this.state.name}
           style={styles.input_item}
+          editable={false}
         >
         用户名:
         </InputItem>

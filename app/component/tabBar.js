@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
   },
   touchableContainer: {
     flex: 1,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -25,7 +26,16 @@ const styles = StyleSheet.create({
     height: 25
   },
   text: {
-    fontSize: 15
+    fontSize: 15,
+    marginTop: 15,
+  },
+  bottom_line: {
+    flex: 1,
+    borderBottomWidth: 2,
+    borderBottomColor: "#3399FF",
+  },
+  bottom_line_none: {
+    flex: 1,
   }
 });
 
@@ -40,8 +50,21 @@ const TAB_BAR_COLOR3 = [
   '#787878','#787878','#3399FF'
 ];
 
-class TabBar extends React.Component {
+const TAB_BAR_BOTTOM_LINE1 = [
+  styles.bottom_line, styles.bottom_line_none, styles.bottom_line_none
+];
 
+const TAB_BAR_BOTTOM_LINE2 = [
+  styles.bottom_line_none, styles.bottom_line, styles.bottom_line_none
+];
+
+const TAB_BAR_BOTTOM_LINE3 = [
+  styles.bottom_line_none, styles.bottom_line_none, styles.bottom_line
+];
+
+
+
+class TabBar extends React.Component {
   constructor(props) {
     super(props);
     if (props.tabBarResources.length !== props.tabs.length) {
@@ -50,7 +73,8 @@ class TabBar extends React.Component {
     this.state = {
       title_color : true,
       tab_index : 0,
-      color_array : TAB_BAR_COLOR1
+      color_array : TAB_BAR_COLOR1,
+      bottom_line_change: TAB_BAR_BOTTOM_LINE1
     }
   }
 
@@ -58,14 +82,17 @@ class TabBar extends React.Component {
     this.setState({title_color:!this.state.title_color});
     if (index == 0) {
       this.setState({color_array: TAB_BAR_COLOR1});
+      this.setState({bottom_line_change: TAB_BAR_BOTTOM_LINE1});
       goToPage(0);
     }
     if (index == 1) {
       this.setState({color_array: TAB_BAR_COLOR2});
+      this.setState({bottom_line_change: TAB_BAR_BOTTOM_LINE2});
       goToPage(1);
     }
     if (index == 2) {
       this.setState({color_array: TAB_BAR_COLOR3});
+      this.setState({bottom_line_change: TAB_BAR_BOTTOM_LINE3});
       goToPage(2);
     }
 
@@ -87,8 +114,10 @@ class TabBar extends React.Component {
           tabs.map((tab, index) => {
             return (
               <TouchableOpacity style={styles.touchableContainer} key={index} onPress={() => {this.on_press(index,navigator,goToPage)}} activeOpacity={1} >
-                <Image style={styles.image} source={tabBarResources[index][activeTab === index ? 1 : 0]}/>
-                <Text style={[styles.text,{color:this.state.color_array[index]}]}>{tabBarTitle[index]}</Text>
+                <View style={this.state.bottom_line_change[index]}>
+                  <Image style={styles.image} source={tabBarResources[index][activeTab === index ? 1 : 0]}/>
+                  <Text style={[styles.text,{color:this.state.color_array[index]}]}>{tabBarTitle[index]}</Text>
+                </View>
               </TouchableOpacity>
             );
           })
