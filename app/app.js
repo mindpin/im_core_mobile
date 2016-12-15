@@ -10,16 +10,17 @@ import UserDetail   from 'im_core_mobile/app/pages/dashboard/detail_page'
 import UserEdit     from 'im_core_mobile/app/pages/users/edit_page'
 import FaqPage      from 'im_core_mobile/app/pages/dashboard/faq_page'
 import Dashboard    from 'im_core_mobile/app/pages/dashboard'
+import VideoPage        from 'im_core_mobile/app/pages/view_files/video_page'
 
 
 const ROUTE_MAP = {
   "StudyPage"   :           { component: StudyPage },
   "FaqPage"     :           { component: FaqPage },
-  "Dashboard"     :         { component: Dashboard },
+  "Dashboard"   :           { component: Dashboard },
   "SignIn"      :           { component: SignIn,          params: {} },
   "UserDetail"  :           { component: UserDetail,      params: {} },
   "UserEdit"    :           { component: UserEdit,        params: {} },
-
+  "VideoPage"   :           { component: VideoPage,       params: {} },
 };
 
 

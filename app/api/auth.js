@@ -37,6 +37,12 @@ const get_faq_detail = (data) => {
   return APIFetch.get(url, data)
 }
 
+/* 获取参考资料文件 */
+const get_ref_files = (data) => {
+  let url = build_url('/admin/references/fetch_ref_file')
+  return APIFetch.get(url, data)
+}
+
 
 export default {
   sign_in,
@@ -45,6 +51,7 @@ export default {
   get_user_detail,
   get_ref_detail,
   get_faq_detail,
+  get_ref_files,
 }
 
 
