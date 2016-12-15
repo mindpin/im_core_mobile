@@ -40,4 +40,4 @@ buck-out/
 \.buckd/
 android/app/libs
 *.keystore
-app/assets
+app/assets/video
