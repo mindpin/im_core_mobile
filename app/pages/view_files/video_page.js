@@ -4,6 +4,7 @@ import {
   Text,
   View,
   Image,
+  PanResponder,
   TouchableOpacity
 } from 'react-native';
 
@@ -16,6 +17,10 @@ import Loading from 'im_core_mobile/app/component/loading'
 import BackNavBar from 'im_core_mobile/app/component/back_nav_bar'
 import Video from 'react-native-video/Video'
 
+const PLAY_PIC_RESOURCES = [
+  require('im_core_mobile/app/assets/image/pause.png'), 
+  require('im_core_mobile/app/assets/image/play.png')
+];
 
 const styles = StyleSheet.create({
   root: {
@@ -27,7 +32,7 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
   controls: {
-    height: 320,
+    height: 400,
     marginLeft: 20,
     marginRight: 20,
   },
@@ -42,7 +47,7 @@ const styles = StyleSheet.create({
   },
   innerProgressRemaining: {
     height: 6,
-    backgroundColor: '#F3F3F3',
+    backgroundColor: '#A5A5A5',
   },
   resizeModeControl: {
     flexDirection: 'row',
@@ -62,19 +67,15 @@ const styles = StyleSheet.create({
     width: 16,
     marginTop: -6,
     marginRight: 6,
-  }
+  },
 });
-
-const PLAY_PIC_RESOURCES = [
-  require('im_core_mobile/app/assets/image/pause.png'), 
-  require('im_core_mobile/app/assets/image/play.png')
-];
 
 class VideoPage extends BasePage {
   constructor(props) {
     super(props);
     this.onLoad = this.onLoad.bind(this);
     this.onProgress = this.onProgress.bind(this);
+    this.onEnd = this.onEnd.bind(this);
     this.state = {
       name: "",
       rate: 1,
@@ -86,6 +87,43 @@ class VideoPage extends BasePage {
       currentTime: 0.0,
       player_pic: PLAY_PIC_RESOURCES[0],
     }
+  }
+
+  componentWillMount() {
+    this._panResponder = PanResponder.create({
+      // 要求成为响应者：
+      onStartShouldSetPanResponder: (evt, gestureState) => true,
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+
+      onPanResponderGrant: (evt, gestureState) => {
+        // 开始手势操作。给用户一些视觉反馈，让他们知道发生了什么事情！
+        console.log("开始点"+gestureState.dx);
+        // gestureState.{x,y}0 现在会被设置为0
+      },
+      onPanResponderMove: (evt, gestureState) => {
+        // 最近一次的移动距离为gestureState.move{X,Y}
+        console.log(gestureState.dx);
+        // 从成为响应者开始时的累计手势移动距离为gestureState.d{x,y}
+      },
+      onPanResponderTerminationRequest: (evt, gestureState) => true,
+      onPanResponderRelease: (evt, gestureState) => {
+        // 用户放开了所有的触摸点，且此时视图已经成为了响应者。
+        if (gestureState.dx > 100) {
+          this.setState({currentTime: this.state.duration});
+        }
+        // 一般来说这意味着一个手势操作已经成功完成。
+      },
+      onPanResponderTerminate: (evt, gestureState) => {
+        // 另一个组件已经成为了新的响应者，所以当前手势将被取消。
+      },
+      onShouldBlockNativeResponder: (evt, gestureState) => {
+        // 返回一个布尔值，决定当前组件是否应该阻止原生组件成为JS响应者
+        // 默认返回true。目前暂时只支持android。
+        return true;
+      },
+    });
   }
 
   componentDidMount() {
@@ -104,6 +142,10 @@ class VideoPage extends BasePage {
 
   onProgress(data) {
     this.setState({currentTime: data.currentTime});
+  }
+
+  onEnd(data){
+   this.setState({currentTime: this.state.duration});
   }
 
   get_loading() {
@@ -162,7 +204,10 @@ class VideoPage extends BasePage {
         <TouchableOpacity style={styles.fullScreen} onPress={() => {
           this.pause_video()
         }}>
-          <Video source={require('im_core_mobile/app/assets/video/party.mp4')}
+          <Video 
+            source={{
+              uri: "http://7xsd7r.com1.z0.glb.clouddn.com/kc/zyOkHHMl/640x360.mp4"
+            }}
             style={styles.fullScreen}
             rate={this.state.rate}
             paused={this.state.paused}
@@ -171,7 +216,7 @@ class VideoPage extends BasePage {
             resizeMode={this.state.resizeMode}
             onLoad={this.onLoad}
             onProgress={this.onProgress}
-            onEnd={() => {this.setState({repeat: false})}}
+            onEnd={this.onEnd}
             repeat={this.state.repeat} />
         </TouchableOpacity>
 
@@ -181,21 +226,22 @@ class VideoPage extends BasePage {
             {this.renderResizeModeControl('contain')}
             {this.renderResizeModeControl('stretch')}
           </View>
-          <View>
-            <View style={styles.progress}>
-              <TouchableOpacity style={styles.fullScreen} onPress={() => {
-                this.pause_video()
-              }}>
-                <Image 
-                  style={styles.pause} 
-                  source={this.state.player_pic} />
-              </TouchableOpacity>
-              <View style={[styles.innerProgressCompleted, {flex: flexCompleted}]} />
-              <View style={[styles.innerProgressRemaining, {flex: flexRemaining}]} />
-            </View>
+          <View style={styles.progress}>
+            <TouchableOpacity onPress={() => {
+              this.pause_video()
+            }}>
+              <Image 
+                style={styles.pause} 
+                source={this.state.player_pic} />
+            </TouchableOpacity>
+            <View 
+              style={[styles.innerProgressCompleted, {flex: flexCompleted}]}
+              {...this._panResponder.panHandlers} />
+            <View 
+              style={[styles.innerProgressRemaining, {flex: flexRemaining}]}
+              {...this._panResponder.panHandlers}/>
           </View>
         </View>
-
         <Loading ref={'loading'} />
       </View>
     );
