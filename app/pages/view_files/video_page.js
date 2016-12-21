@@ -84,7 +84,7 @@ class VideoPage extends BasePage {
       resizeMode: 'contain',
       repeat: false,
       duration: 0.0,
-      currentTime: 0.0,
+      currentTime: 1.0,
       player_pic: PLAY_PIC_RESOURCES[0],
     }
   }
@@ -104,15 +104,22 @@ class VideoPage extends BasePage {
       },
       onPanResponderMove: (evt, gestureState) => {
         // 最近一次的移动距离为gestureState.move{X,Y}
-        console.log(gestureState.dx);
+        console.log(gestureState.moveX);
         // 从成为响应者开始时的累计手势移动距离为gestureState.d{x,y}
       },
       onPanResponderTerminationRequest: (evt, gestureState) => true,
       onPanResponderRelease: (evt, gestureState) => {
         // 用户放开了所有的触摸点，且此时视图已经成为了响应者。
-        if (gestureState.dx > 100) {
-          this.setState({currentTime: this.state.duration});
-        }
+        // this.player.seek(7);
+        console.log(gestureState.x0);
+        // if (gestureState.moveX == 389.0) {
+        //   console.log("移动触点大于 389");
+        //   this.setState({currentTime: this.state.duration});
+        // }
+        // if (gestureState.moveX == 43.0) {
+        //   console.log("移动触点横坐标小于 43");
+        //   this.setState({currentTime: 0.5});
+        // }
         // 一般来说这意味着一个手势操作已经成功完成。
       },
       onPanResponderTerminate: (evt, gestureState) => {
@@ -145,7 +152,7 @@ class VideoPage extends BasePage {
   }
 
   onEnd(data){
-   this.setState({currentTime: this.state.duration});
+    this.setState({currentTime: this.state.duration});
   }
 
   get_loading() {
@@ -192,11 +199,13 @@ class VideoPage extends BasePage {
       player_pic: resource,
     }) 
   }
+  set_time(){
+    this.player.seek(5);
+  }
 
   render() {
     const flexCompleted = this.getCurrentTimePercentage() * 100;
     const flexRemaining = (1 - this.getCurrentTimePercentage()) * 100;
-
     return (
       <View style={styles.root}>
         <BackNavBar component={this}>{this.state.name}</BackNavBar>
@@ -205,9 +214,10 @@ class VideoPage extends BasePage {
           this.pause_video()
         }}>
           <Video 
-            source={{
-              uri: "http://7xsd7r.com1.z0.glb.clouddn.com/kc/zyOkHHMl/640x360.mp4"
-            }}
+            source={require("im_core_mobile/app/assets/video/party.mp4")}
+            ref={(ref) => {
+              this.player = ref
+            }} 
             style={styles.fullScreen}
             rate={this.state.rate}
             paused={this.state.paused}
