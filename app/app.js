@@ -18,17 +18,17 @@ import ReferenceFileNotExitedPage from 'im_core_mobile/app/pages/view_files/refe
 
 
 const ROUTE_MAP = {
-  "StudyPage"   :           { component: StudyPage },
-  "FaqPage"     :           { component: FaqPage },
-  "Dashboard"   :           { component: Dashboard },
-  "SignIn"      :           { component: SignIn,          params: {} },
-  "UserDetail"  :           { component: UserDetail,      params: {} },
-  "UserEdit"    :           { component: UserEdit,        params: {} },
-  "VideoPage"   :           { component: VideoPage,       params: {} },
-  "ImagePage"   :           { component: ImagePage,       params: {} },
-  "FileTypeNotSupportedPage"   :           { component: ImagePage,       params: {} },
-  "TranscodingPage"   :           { component: ImagePage,       params: {} },
-  "ReferenceFileNotExistPage"   :           { component: ImagePage,       params: {} },
+  "StudyPage"                  :           { component: StudyPage },
+  "FaqPage"                    :           { component: FaqPage },
+  "Dashboard"                  :           { component: Dashboard },
+  "SignIn"                     :           { component: SignIn,           params: {} },
+  "UserDetail"                 :           { component: UserDetail,       params: {} },
+  "UserEdit"                   :           { component: UserEdit,         params: {} },
+  "VideoPage"                  :           { component: VideoPage,        params: {} },
+  "ImagePage"                  :           { component: ImagePage,        params: {} },
+  "FileTypeNotSupportedPage"   : { component: FileTypeNotSupportedPage,   params: {} },
+  "TranscodingPage"            : { component: TranscodingPage,            params: {} },
+  "ReferenceFileNotExitedPage" : { component: ReferenceFileNotExitedPage, params: {} },
 };
 
 

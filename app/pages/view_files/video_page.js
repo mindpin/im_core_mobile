@@ -81,6 +81,8 @@ class VideoPage extends BasePage {
     this.grayViewWidth     = 0;
     this.state = {
       name: "",
+      url: "",
+      status: "",
       rate: 1,
       volume: 1,
       muted: false,
@@ -135,6 +137,8 @@ class VideoPage extends BasePage {
       this.get_loading().dismiss()
       this.setState({
         name: res_data["name"],
+        url: res_data["url"],
+        status: res_data["status"],
       }) 
     })
   }
@@ -199,61 +203,74 @@ class VideoPage extends BasePage {
   render() {
     const flexCompleted = this.getCurrentTimePercentage() * 100;
     const flexRemaining = (1 - this.getCurrentTimePercentage()) * 100;
+    this.view_ary = []
+    if(this.state.status == "processing"){
+      this.view_ary.push(
+        <Text>文件正在转码中</Text>
+      );
+    }else if(this.state.status == "failure"){
+      this.view_ary.push(
+        <Text>文件不支持在线展示</Text>
+      );
+    }else if (this.state.status == "success") {
+      this.view_ary.push(
+        <View>
+          <TouchableOpacity style={styles.fullScreen} onPress={() => {
+            this.pause_video()
+          }}>
+            <Video 
+              source={{uri: this.state.url}}
+              ref={(ref) => {
+                this.player = ref
+              }} 
+              style={styles.fullScreen}
+              rate={this.state.rate}
+              paused={this.state.paused}
+              volume={this.state.volume}
+              muted={this.state.muted}
+              resizeMode={this.state.resizeMode}
+              onLoad={this.onLoad}
+              onProgress={this.onProgress}
+              onEnd={this.onEnd}
+              repeat={this.state.repeat} />
+          </TouchableOpacity>
+
+          <View style={styles.controls}>
+            <View style={styles.resizeModeControl}>
+              {this.renderResizeModeControl('cover')}
+              {this.renderResizeModeControl('contain')}
+              {this.renderResizeModeControl('stretch')}
+            </View>
+            <View style={styles.progress}>
+              <TouchableOpacity onPress={() => {
+                this.pause_video()
+              }}>
+                <Image 
+                  style={styles.pause} 
+                  source={this.state.player_pic} />
+              </TouchableOpacity>
+              <View
+                onLayout={(e)=> {
+                  this.blueViewLocationX= e.nativeEvent.layout.x;
+                  this.blueViewWidth = e.nativeEvent.layout.width;
+                }}
+                style={[styles.innerProgressCompleted, {flex: flexCompleted}]}
+                {...this._panResponder.panHandlers} />
+              <View 
+                onLayout={(e)=> {
+                  this.grayViewWidth = e.nativeEvent.layout.width;
+                }}
+                style={[styles.innerProgressRemaining, {flex: flexRemaining}]}
+                {...this._panResponder.panHandlers}/>
+            </View>
+          </View>
+        </View>
+      );
+    }
     return (
       <View style={styles.root}>
         <BackNavBar component={this}>{this.state.name}</BackNavBar>
-
-        <TouchableOpacity style={styles.fullScreen} onPress={() => {
-          this.pause_video()
-        }}>
-          <Video 
-            source={{
-              uri: "http://7xsd7r.com1.z0.glb.clouddn.com/kc/zyOkHHMl/640x360.mp4"
-            }}
-            ref={(ref) => {
-              this.player = ref
-            }} 
-            style={styles.fullScreen}
-            rate={this.state.rate}
-            paused={this.state.paused}
-            volume={this.state.volume}
-            muted={this.state.muted}
-            resizeMode={this.state.resizeMode}
-            onLoad={this.onLoad}
-            onProgress={this.onProgress}
-            onEnd={this.onEnd}
-            repeat={this.state.repeat} />
-        </TouchableOpacity>
-
-        <View style={styles.controls}>
-          <View style={styles.resizeModeControl}>
-            {this.renderResizeModeControl('cover')}
-            {this.renderResizeModeControl('contain')}
-            {this.renderResizeModeControl('stretch')}
-          </View>
-          <View style={styles.progress}>
-            <TouchableOpacity onPress={() => {
-              this.pause_video()
-            }}>
-              <Image 
-                style={styles.pause} 
-                source={this.state.player_pic} />
-            </TouchableOpacity>
-            <View
-              onLayout={(e)=> {
-                this.blueViewLocationX= e.nativeEvent.layout.x;
-                this.blueViewWidth = e.nativeEvent.layout.width;
-              }}
-              style={[styles.innerProgressCompleted, {flex: flexCompleted}]}
-              {...this._panResponder.panHandlers} />
-            <View 
-              onLayout={(e)=> {
-                this.grayViewWidth = e.nativeEvent.layout.width;
-              }}
-              style={[styles.innerProgressRemaining, {flex: flexRemaining}]}
-              {...this._panResponder.panHandlers}/>
-          </View>
-        </View>
+        {this.view_ary}
         <Loading ref={'loading'} />
       </View>
     );

@@ -58,7 +58,7 @@ class ImagePage extends BasePage {
     this.images_ary = []; 
     for(var i = 0; i < this.state.urls.length; i++){
       this.images_ary.push(
-        <Image source={{uri: this.state.urls[i]}} style={[styles.image]} />
+        <Image source={{uri: this.state.urls[i]}} style={[styles.image]} key={i}/>
       )
     }
     return (

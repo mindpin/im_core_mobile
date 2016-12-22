@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class ImagePage extends BasePage {
+class ReferenceFileNotExistPage extends BasePage {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,20 +38,18 @@ class ImagePage extends BasePage {
       }) 
     })
   }
-
   get_loading() {
     return this.refs['loading']
   }
-
   render() {
     return (
       <View style={styles.root}>
         <BackNavBar component={this}>{this.state.name}</BackNavBar>
-        <Text>文件类型不支持在线展示</Text>
+        <Text>没有引用任何文件</Text>
         <Loading ref={'loading'} />
       </View>
     );
   }
 }
 
-export default createForm()(ReferenceFileNotExistPage)
+export default ReferenceFileNotExistPage
