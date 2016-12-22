@@ -73,9 +73,13 @@ const styles = StyleSheet.create({
 class VideoPage extends BasePage {
   constructor(props) {
     super(props);
-    this.onLoad = this.onLoad.bind(this);
-    this.onProgress = this.onProgress.bind(this);
-    this.onEnd = this.onEnd.bind(this);
+    this.onLoad            = this.onLoad.bind(this);
+    this.onProgress        = this.onProgress.bind(this);
+    this.onEnd             = this.onEnd.bind(this);
+    this.blueViewLocationX = 0;
+    this.blueViewWidth     = 0;
+    this.grayViewLocationX = 0;
+    this.grayViewWidth     = 0;
     this.state = {
       name: "",
       rate: 1,
@@ -99,28 +103,21 @@ class VideoPage extends BasePage {
 
       onPanResponderGrant: (evt, gestureState) => {
         // 开始手势操作。给用户一些视觉反馈，让他们知道发生了什么事情！
-        console.log("开始点"+gestureState.dx);
+        
         // gestureState.{x,y}0 现在会被设置为0
       },
       onPanResponderMove: (evt, gestureState) => {
         // 最近一次的移动距离为gestureState.move{X,Y}
-        console.log(gestureState.moveX);
+
         // 从成为响应者开始时的累计手势移动距离为gestureState.d{x,y}
       },
       onPanResponderTerminationRequest: (evt, gestureState) => true,
       onPanResponderRelease: (evt, gestureState) => {
         // 用户放开了所有的触摸点，且此时视图已经成为了响应者。
-        // this.player.seek(7);
-        console.log(gestureState.x0);
-        // if (gestureState.moveX == 389.0) {
-        //   console.log("移动触点大于 389");
-        //   this.setState({currentTime: this.state.duration});
-        // }
-        // if (gestureState.moveX == 43.0) {
-        //   console.log("移动触点横坐标小于 43");
-        //   this.setState({currentTime: 0.5});
-        // }
-        // 一般来说这意味着一个手势操作已经成功完成。
+        // this.player.seek(0);
+        const progressWidth = this.blueViewWidth + this.grayViewWidth
+        const time = (gestureState.x0-22) / progressWidth * this.state.duration
+        this.player.seek(time);
       },
       onPanResponderTerminate: (evt, gestureState) => {
         // 另一个组件已经成为了新的响应者，所以当前手势将被取消。
@@ -199,9 +196,6 @@ class VideoPage extends BasePage {
       player_pic: resource,
     }) 
   }
-  set_time(){
-    this.player.seek(5);
-  }
 
   render() {
     const flexCompleted = this.getCurrentTimePercentage() * 100;
@@ -214,7 +208,9 @@ class VideoPage extends BasePage {
           this.pause_video()
         }}>
           <Video 
-            source={require("im_core_mobile/app/assets/video/party.mp4")}
+            source={{
+              uri: "http://7xsd7r.com1.z0.glb.clouddn.com/kc/zyOkHHMl/640x360.mp4"
+            }}
             ref={(ref) => {
               this.player = ref
             }} 
@@ -244,10 +240,18 @@ class VideoPage extends BasePage {
                 style={styles.pause} 
                 source={this.state.player_pic} />
             </TouchableOpacity>
-            <View 
+            <View
+              onLayout={(e)=> {
+                this.blueViewLocationX= e.nativeEvent.layout.x;
+                this.blueViewWidth = e.nativeEvent.layout.width;
+              }}
               style={[styles.innerProgressCompleted, {flex: flexCompleted}]}
               {...this._panResponder.panHandlers} />
             <View 
+              onLayout={(e)=> {
+                this.grayViewLocationX= e.nativeEvent.layout.x;
+                this.grayViewWidth = e.nativeEvent.layout.width;
+              }}
               style={[styles.innerProgressRemaining, {flex: flexRemaining}]}
               {...this._panResponder.panHandlers}/>
           </View>
