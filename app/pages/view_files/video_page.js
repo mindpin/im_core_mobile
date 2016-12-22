@@ -78,7 +78,6 @@ class VideoPage extends BasePage {
     this.onEnd             = this.onEnd.bind(this);
     this.blueViewLocationX = 0;
     this.blueViewWidth     = 0;
-    this.grayViewLocationX = 0;
     this.grayViewWidth     = 0;
     this.state = {
       name: "",
@@ -116,7 +115,7 @@ class VideoPage extends BasePage {
         // 用户放开了所有的触摸点，且此时视图已经成为了响应者。
         // this.player.seek(0);
         const progressWidth = this.blueViewWidth + this.grayViewWidth
-        const time = (gestureState.x0-22) / progressWidth * this.state.duration
+        const time = (gestureState.x0 - this.blueViewLocationX) / progressWidth * this.state.duration
         this.player.seek(time);
       },
       onPanResponderTerminate: (evt, gestureState) => {
@@ -249,7 +248,6 @@ class VideoPage extends BasePage {
               {...this._panResponder.panHandlers} />
             <View 
               onLayout={(e)=> {
-                this.grayViewLocationX= e.nativeEvent.layout.x;
                 this.grayViewWidth = e.nativeEvent.layout.width;
               }}
               style={[styles.innerProgressRemaining, {flex: flexRemaining}]}
