@@ -80,7 +80,7 @@ class StudyPage extends BasePage {
             <View style={styles.listview_view_style}>
               <TouchableOpacity 
                 onPress={()=> {
-                  if (rowData.kind == '视频') this.props.navigator.push({id: "VideoPage", params: {id: rowData.id}}); 
+                  if (rowData.kind == 'video') this.props.navigator.push({id: "VideoPage", params: {id: rowData.id}}); 
                   else this.props.navigator.push({id: "ImagePage", params: {id: rowData.id}});
                 }}
               >

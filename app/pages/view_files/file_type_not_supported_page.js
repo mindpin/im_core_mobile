@@ -2,9 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   Text,
-  View,
-  Image,
-  ScrollView  
+  View, 
 } from 'react-native';
 
 import Button from 'antd-mobile/lib/button'
@@ -21,13 +19,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flex: 1
   },
-  image: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 250,
-    marginTop:5,
-    marginBottom: 5, 
-  },
 });
 
 class ImagePage extends BasePage {
@@ -35,7 +26,6 @@ class ImagePage extends BasePage {
     super(props);
     this.state = {
       name: "",
-      urls: [],
     }
   }
 
@@ -45,7 +35,6 @@ class ImagePage extends BasePage {
       this.get_loading().dismiss()
       this.setState({
         name: res_data["name"],
-        urls: res_data["urls"],
       }) 
     })
   }
@@ -55,22 +44,14 @@ class ImagePage extends BasePage {
   }
 
   render() {
-    this.images_ary = []; 
-    for(var i = 0; i < this.state.urls.length; i++){
-      this.images_ary.push(
-        <Image source={{uri: this.state.urls[i]}} style={[styles.image]} />
-      )
-    }
     return (
       <View style={styles.root}>
         <BackNavBar component={this}>{this.state.name}</BackNavBar>
-        <ScrollView>
-          {this.images_ary}
-        </ScrollView>
+        <Text>文件类型不支持在线展示</Text>
         <Loading ref={'loading'} />
       </View>
     );
   }
 }
 
-export default createForm()(ImagePage)
+export default createForm()(FileTypeNotSupportedPage)
