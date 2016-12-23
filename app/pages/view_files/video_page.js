@@ -210,7 +210,7 @@ class VideoPage extends BasePage {
       );
     }else if(this.state.status == "failure"){
       this.view_ary.push(
-        <Text>文件不支持在线展示</Text>
+        <Text>文件转码失败</Text>
       );
     }else if (this.state.status == "success") {
       this.view_ary.push(
@@ -267,6 +267,7 @@ class VideoPage extends BasePage {
         </View>
       );
     }
+
     return (
       <View style={styles.root}>
         <BackNavBar component={this}>{this.state.name}</BackNavBar>

@@ -10,7 +10,6 @@ import { createForm } from 'rc-form'
 import API from 'API'
 import BasePage from 'im_core_mobile/app/component/base_page'
 
-import Loading from 'im_core_mobile/app/component/loading'
 import BackNavBar from 'im_core_mobile/app/component/back_nav_bar'
 
 
@@ -22,31 +21,11 @@ const styles = StyleSheet.create({
 });
 
 class ReferenceFileNotExistPage extends BasePage {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "",
-    }
-  }
-
-  componentDidMount() {
-    this.get_loading().show()  
-    API.auth.get_ref_files({id: this.props.id}).done((res_data, res)=>{
-      this.get_loading().dismiss()
-      this.setState({
-        name: res_data["name"],
-      }) 
-    })
-  }
-  get_loading() {
-    return this.refs['loading']
-  }
   render() {
     return (
       <View style={styles.root}>
-        <BackNavBar component={this}>{this.state.name}</BackNavBar>
+        <BackNavBar component={this}>{this.props.name}</BackNavBar>
         <Text>没有引用任何文件</Text>
-        <Loading ref={'loading'} />
       </View>
     );
   }

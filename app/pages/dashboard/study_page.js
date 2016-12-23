@@ -80,19 +80,32 @@ class StudyPage extends BasePage {
             <View style={styles.listview_view_style}>
               <TouchableOpacity 
                 onPress={()=> {
-                  if (rowData.kind == 'video') {
-                    this.props.navigator.push({
-                      id: "VideoPage", params: {id: rowData.id}
-                    }); 
-                  }else if(rowData.kind == ""){
-                    this.props.navigator.push({
-                      id: "ReferenceFileNotExitedPage", params: {id: rowData.id}
-                    }); 
-                  }else{
-                    this.props.navigator.push({
-                      id: "ImagePage", params: {id: rowData.id}
-                    });
-                  } 
+                  switch(rowData.kind){
+                    case 'video':
+                      this.props.navigator.push({
+                        id: "VideoPage", params: {id: rowData.id}
+                      }); 
+                      break;
+                    case "pdf":
+                      this.props.navigator.push({
+                        id: "ImagePage", params: {id: rowData.id}
+                      });
+                      break;
+                    case "office":
+                      this.props.navigator.push({
+                        id: "ImagePage", params: {id: rowData.id}
+                      });
+                      break;
+                    case "":
+                      this.props.navigator.push({
+                        id: "ReferenceFileNotExitedPage", params: {name: rowData.name}
+                      }); 
+                      break;
+                    default:
+                      this.props.navigator.push({
+                        id: "FileTypeNotSupportedPage", params: {name: rowData.name}
+                      });
+                  }
                 }}
               >
                 <Text style={styles.references_name}>{rowData.name}</Text>

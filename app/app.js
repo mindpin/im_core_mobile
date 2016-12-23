@@ -13,7 +13,6 @@ import Dashboard    from 'im_core_mobile/app/pages/dashboard'
 import VideoPage    from 'im_core_mobile/app/pages/view_files/video_page'
 import ImagePage    from 'im_core_mobile/app/pages/view_files/image_page'
 import FileTypeNotSupportedPage from 'im_core_mobile/app/pages/view_files/file_type_not_supported_page'
-import TranscodingPage from 'im_core_mobile/app/pages/view_files/transcoding_page'
 import ReferenceFileNotExitedPage from 'im_core_mobile/app/pages/view_files/reference_file_not_exist_page'
 
 
@@ -27,7 +26,6 @@ const ROUTE_MAP = {
   "VideoPage"                  :           { component: VideoPage,        params: {} },
   "ImagePage"                  :           { component: ImagePage,        params: {} },
   "FileTypeNotSupportedPage"   : { component: FileTypeNotSupportedPage,   params: {} },
-  "TranscodingPage"            : { component: TranscodingPage,            params: {} },
   "ReferenceFileNotExitedPage" : { component: ReferenceFileNotExitedPage, params: {} },
 };
 
