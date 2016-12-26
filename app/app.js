@@ -37,8 +37,33 @@ export default class App extends React.Component {
       <Navigator
         // 初始页面
         initialRoute={{
-          id: 'SignIn',
-          params: {}
+          id: 'ConceptList',
+          params: {
+            dimension_define: {
+              name_fiels: {
+                field: 'book_title',
+                label: '书名'
+              },
+              dimension_fields: [
+                {
+                  field: 'author',
+                  label: '作者',
+                },
+                {
+                  field: 'price',
+                  label: '价格',
+                },
+              ]
+            },
+            data: [
+              {book_title: "name1", author: "author1", price: "price1"},
+              {book_title: "name2", author: "author2", price: "price2"},
+              {book_title: "name3", author: "author3", price: "price3"},
+              {book_title: "name4", author: "author4", price: "price4"},
+              {book_title: "name5", author: "author5", price: "price5"},
+              {book_title: "name6", author: "author6", price: "price6"},
+            ]
+          }
         }}
         // 路由入口
         renderScene={this.render_scene.bind(this)}
