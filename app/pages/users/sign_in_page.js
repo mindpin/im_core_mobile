@@ -6,12 +6,11 @@ import {
   Alert,
   View
 } from 'react-native';
+import { createForm } from 'rc-form'
+import { Loading } from 'IcmComponent'
 
 import InputItem from 'antd-mobile/lib/input-item'
 import Button from 'antd-mobile/lib/button'
-import { createForm } from 'rc-form'
-import Loading from 'im_core_mobile/app/component/loading'
-
 import API from 'API'
 
 
@@ -47,7 +46,7 @@ class SignIn extends Component {
     API.auth.sign_in(post_data).done((res_data, res)=>{
       if(res_data.valid_info == "successfully"){
         this.get_loading().dismiss()
-        this.props.navigator.replace({id: "Dashboard", params: {}})
+        this.props.navigator.replace({id: "Dashboard"})
       }else{
         this.get_loading().dismiss()
         Alert.alert('错误提示', res_data.valid_info, [{ text: '确定'}])

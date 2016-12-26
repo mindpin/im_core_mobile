@@ -6,10 +6,12 @@ import {
 } from 'react-native';
 
 import { createForm } from 'rc-form'
-import API from 'API'
-import BasePage from 'im_core_mobile/app/component/base_page'
+import {
+  BasePage,
+  BackNavBar,
+} from 'IcmComponent'
 
-import BackNavBar from 'im_core_mobile/app/component/back_nav_bar'
+import API from 'API'
 
 
 const styles = StyleSheet.create({

@@ -1,15 +1,15 @@
 import React from 'react';
 import { Text, View,StyleSheet } from 'react-native';
 
-import BasePage from 'im_core_mobile/app/component/base_page'
+import {
+  BasePage,
+  NavBar,
+  Loading,
+} from 'IcmComponent'
 
 import Button from 'antd-mobile/lib/button'
 import InputItem from 'antd-mobile/lib/input-item'
-import Navbar from 'im_core_mobile/app/component/nav_bar'
 import API from 'API'
-
-import Dashboard from 'im_core_mobile/app/pages/dashboard'
-import Loading from 'im_core_mobile/app/component/loading'
 
 const styles = StyleSheet.create({
   root: {
@@ -27,7 +27,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 20,
     marginRight: 20,
-  }
+  },
+  nav_style: {
+    color: "#fff", 
+    fontSize: 20,
+  },
 });
 
 class DetailPage extends BasePage {
@@ -86,7 +90,7 @@ class DetailPage extends BasePage {
 
     return (
       <View style={styles.root}>
-        <Navbar titleContent={<Text style={{color: "#fff", fontSize: 20}}>用户信息</Text>}/>
+        <NavBar titleContent={<Text style={styles.nav_style}>用户信息</Text>}/>
         <InputItem 
           value={this.state.email}
           style={styles.input_item}

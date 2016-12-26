@@ -10,7 +10,9 @@ import {
 } from 'react-native'
 
 
-import StorageKeys from 'im_core_mobile/app/constants/storage_keys'
+import {
+  STORAGE_KEYS,
+} from 'IcmConstant'
 
 
 export default {
@@ -33,7 +35,7 @@ export default {
 
   request (method, url, data = {}, data_type) {
     let promise = new FetchPromise()
-    AsyncStorage.getItem(StorageKeys.SIGN_TOKEN, (error, value)=>{
+    AsyncStorage.getItem(STORAGE_KEYS.SIGN_TOKEN, (error, value)=>{
       let hash = JSON.parse(value)
 
       if(!!hash && !!hash.tokenVO && !!hash.tokenVO.token){

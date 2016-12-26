@@ -7,14 +7,15 @@ import {
   PanResponder,
   TouchableOpacity
 } from 'react-native';
+import { createForm } from 'rc-form'
+import {
+  BasePage,
+  BackNavBar,
+  Loading,
+} from 'IcmComponent'
 
 import Button from 'antd-mobile/lib/button'
-import { createForm } from 'rc-form'
 import API from 'API'
-import BasePage from 'im_core_mobile/app/component/base_page'
-
-import Loading from 'im_core_mobile/app/component/loading'
-import BackNavBar from 'im_core_mobile/app/component/back_nav_bar'
 import Video from 'react-native-video/Video'
 
 const PLAY_PIC_RESOURCES = [
