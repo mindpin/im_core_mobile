@@ -8,9 +8,11 @@ import {
     Platform,
 } from 'react-native'
 
-import Icon from 'react-native-vector-icons/FontAwesome'
+import {
+  DEFAULT_STYLES
+} from 'IcmConstant'
 
-import DEFAULT_STYLES from 'im_core_mobile/app/constants/default_styles'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const styles = StyleSheet.create({
     root: {

@@ -8,9 +8,12 @@ import {
   TabBarIOS
 } from 'react-native'
 
-import BasePage from 'im_core_mobile/app/component/base_page'
+import {
+  BasePage,
+  TabBar,
+} from 'IcmComponent'
+
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import TabBar from 'im_core_mobile/app/component/tabBar';
 import UserDetail from 'im_core_mobile/app/pages/dashboard/detail_page'
 import Study from 'im_core_mobile/app/pages/dashboard/study_page'
 import Faq from 'im_core_mobile/app/pages/dashboard/faq_page'
@@ -45,7 +48,7 @@ class Dashboard extends BasePage {
   render() {
     // ios 下 tabbar icon 大小不能自适应，先临时用一个占位
     return (
-        <ScrollableTabView
+      <ScrollableTabView
         tabBarPosition="bottom"
         locked={true}
         scrollWithoutAnimation={true}

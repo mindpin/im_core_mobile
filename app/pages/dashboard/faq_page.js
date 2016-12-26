@@ -1,15 +1,15 @@
 import React from 'react';
 import { Text, View, ListView, StyleSheet } from 'react-native';
 
-
-import BasePage from 'im_core_mobile/app/component/base_page'
+import {
+  BasePage,
+  NavBar,
+  Loading,
+} from 'IcmComponent'
 
 import Button from 'antd-mobile/lib/button'
 import InputItem from 'antd-mobile/lib/input-item'
-import Navbar from 'im_core_mobile/app/component/nav_bar'
 import API from 'API'
-
-import Loading from 'im_core_mobile/app/component/loading'
 
 console.disableYellowBox = true;
 
@@ -68,7 +68,7 @@ class FaqPage extends BasePage {
   render(){
     return(
       <View style={styles.root}>
-        <Navbar titleContent={<Text style={{color: "#fff", fontSize: 20}}>问答</Text>}/>
+        <NavBar titleContent={<Text style={{color: "#fff", fontSize: 20}}>问答</Text>}/>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={(rowData) => 

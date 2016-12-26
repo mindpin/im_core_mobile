@@ -6,14 +6,17 @@ import {
   Image,
   Text,
 } from 'react-native';
-import CommonStyle from 'im_core_mobile/app/component/commonStyle';
+
+import {
+  COMMON_STYLES
+} from 'IcmConstant'
 
 const styles = StyleSheet.create({
   container: {
     height: 50,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: CommonStyle.TABBAR_COLOR,
+    backgroundColor: COMMON_STYLES.TABBAR_COLOR,
   },
   touchableContainer: {
     flex: 1,

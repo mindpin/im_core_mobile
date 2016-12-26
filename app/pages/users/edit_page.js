@@ -6,13 +6,12 @@ import {
   View
 } from 'react-native';
 
+import { Loading } from 'IcmComponent'
+import { createForm } from 'rc-form'
+
 import InputItem from 'antd-mobile/lib/input-item'
 import Button from 'antd-mobile/lib/button'
-import { createForm } from 'rc-form'
 import API from 'API'
-import Loading from 'im_core_mobile/app/component/loading'
-
-
 
 const styles = StyleSheet.create({
   root: {
