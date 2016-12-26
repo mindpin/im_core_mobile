@@ -1,5 +1,11 @@
 import React from 'react';
-import { Text, View, ListView, StyleSheet } from 'react-native';
+import { 
+  Text, 
+  View, 
+  ListView, 
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
 
 
 import BasePage from 'im_core_mobile/app/component/base_page'
@@ -36,8 +42,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     borderBottomWidth: 0.5,
-  }
-
+  },
 });
 
 
@@ -73,7 +78,38 @@ class StudyPage extends BasePage {
           dataSource={this.state.dataSource}
           renderRow={(rowData) => 
             <View style={styles.listview_view_style}>
-              <Text style={styles.references_name}>{rowData.name}</Text>
+              <TouchableOpacity 
+                onPress={()=> {
+                  switch(rowData.kind){
+                    case 'video':
+                      this.props.navigator.push({
+                        id: "VideoPage", params: {id: rowData.id}
+                      }); 
+                      break;
+                    case "pdf":
+                      this.props.navigator.push({
+                        id: "ImagePage", params: {id: rowData.id}
+                      });
+                      break;
+                    case "office":
+                      this.props.navigator.push({
+                        id: "ImagePage", params: {id: rowData.id}
+                      });
+                      break;
+                    case "":
+                      this.props.navigator.push({
+                        id: "ReferenceFileNotExitedPage", params: {name: rowData.name}
+                      }); 
+                      break;
+                    default:
+                      this.props.navigator.push({
+                        id: "FileTypeNotSupportedPage", params: {name: rowData.name}
+                      });
+                  }
+                }}
+              >
+                <Text style={styles.references_name}>{rowData.name}</Text>
+              </TouchableOpacity>
               <Text style={styles.references_tags}>{rowData.tags}</Text>
             </View>
           }

@@ -32,11 +32,6 @@ export default {
   },
 
   request (method, url, data = {}, data_type) {
-    console.log(`request method:${method} url:${url} data_type:${data_type}`)
-    console.log("data is ~~~~~")
-    console.log(data)
-    console.log(`~~~~~`)
-
     let promise = new FetchPromise()
     AsyncStorage.getItem(StorageKeys.SIGN_TOKEN, (error, value)=>{
       let hash = JSON.parse(value)
@@ -55,7 +50,6 @@ export default {
 const fetch_by_data_type = (url, method, data, data_type) => {
   if(data_type == "query"){
     url = url + hash_2_query(data)
-    console.log(`${method} ${url}`)
     return fetch(url, {method: method})
   }
 
@@ -149,25 +143,20 @@ class FetchPromise {
     this.always_func_callbacks = []
 
     this.done_func    = function(){
-      console.log("done func")
       let args = arguments
-      console.log(args);
       Array.from(this.done_func_callbacks).forEach((fun)=>{
         fun(...args)
       })
     }
 
     this.fail_func    = function(){
-      console.log("fail func")
       let args = arguments
       Array.from(this.fail_func_callbacks).forEach((fun)=>{
         fun(...args)
       })
     }
     this.always_func  = function(){
-      console.log("always func")
       let args = arguments
-      console.log(arguments)
       Array.from(this.always_func_callbacks).forEach((fun)=>{
         fun(...args)
       })
