@@ -13,6 +13,8 @@ import VideoPage    from 'im_core_mobile/app/pages/view_files/video_page'
 import ImagePage    from 'im_core_mobile/app/pages/view_files/image_page'
 import FileTypeNotSupportedPage from 'im_core_mobile/app/pages/view_files/file_type_not_supported_page'
 import ReferenceFileNotExitedPage from 'im_core_mobile/app/pages/view_files/reference_file_not_exist_page'
+import ConceptList  from 'im_core_mobile/app/pages/concept_list'
+
 
 export default {
   StudyPage,
@@ -23,7 +25,7 @@ export default {
   UserEdit,
   VideoPage,
   ImagePage,
+  ConceptList,
   FileTypeNotSupportedPage,
   ReferenceFileNotExitedPage,
 }
-
