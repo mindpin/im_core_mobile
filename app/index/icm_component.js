@@ -9,6 +9,7 @@ import NavBar           from 'im_core_mobile/app/component/nav_bar'
 import TabBar           from 'im_core_mobile/app/component/tab_bar'
 import SearchInput      from 'im_core_mobile/app/component/search_input'
 import ConceptListView  from 'im_core_mobile/app/component/concept_list_view'
+import CategoryFilterBox from 'im_core_mobile/app/component/category_filter_box'
 
 export {
   BackNavBar,
@@ -18,4 +19,5 @@ export {
   TabBar,
   SearchInput,
   ConceptListView,
+  CategoryFilterBox,
 }
