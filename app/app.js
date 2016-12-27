@@ -64,7 +64,8 @@ export default class App extends React.Component {
               {book_title: "name3", author: "author3", price: "price3", book_category: "类别三"},
               {book_title: "name4", author: "author4", price: "price4", book_category: "类别三"},
               {book_title: "name5", author: "author5", price: "price5", book_category: "类别二"},
-              {book_title: "name6", author: "author6", price: "price6", book_category: "类别一"},
+              {book_title: "name6", author: "author6", price: "price6", book_category: "类别四"},
+              {book_title: "name6", author: "author6", price: "price611", book_category: "类别五"},
             ]
           }
         }}
