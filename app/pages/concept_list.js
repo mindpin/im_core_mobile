@@ -30,6 +30,15 @@ class ConceptList extends BasePage {
     super(props)
   }
 
+  load_more(current_data, add_new_data_callback) {
+    setTimeout(()=>{
+      add_new_data_callback([
+        {book_title: "name1", author: "author1", price: "price1", book_category: "类别一"},
+        {book_title: "name2", author: "author2", price: "price2", book_category: "类别二"},
+      ])
+    }, 2000)
+  }
+
   render() {
     return (
       <View style={styles.root}>
@@ -48,6 +57,7 @@ class ConceptList extends BasePage {
         <ConceptListView
           data={this.props.data}
           dimension_define={this.props.dimension_define}
+          load_more={this.load_more.bind(this)}
         />
       </View>
     );

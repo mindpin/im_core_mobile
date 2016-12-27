@@ -42,17 +42,32 @@ const styles = StyleSheet.create({
   header_c3: {
     flex: 1
   },
+  footer_view: {
+    padding: 15,
+    borderBottomWidth: 0.5,
+    backgroundColor: "#0003",
+    flexDirection: "row",
+    justifyContent: "center",
+  }
 });
-
-
 
 class ConceptListView extends React.Component {
   constructor(props) {
     super(props)
-    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this._data = Array.from(this.props.data)
     this.state = {
-      dataSource: ds.cloneWithRows(this.props.data),
+      dataSource: this.dataSource.cloneWithRows(this._data),
+      isLoadingMore: false
     }
+  }
+
+  addNewData(newData){
+    this._data = this._data.concat(newData)
+    this.setState({
+      isLoadingMore: false,
+      dataSource: this.dataSource.cloneWithRows(this._data),
+    })
   }
 
   renderRow(rowData) {
@@ -88,12 +103,39 @@ class ConceptListView extends React.Component {
     )
   }
 
+  renderFooter() {
+    if(this.state.isLoadingMore){
+      return(
+        <View style={styles.footer_view}>
+          <Text>正在加载...</Text>
+        </View>
+      )
+    }else{
+      return(
+        <View></View>
+      )
+    }
+  }
+
+  onEndReached(evt) {
+    if(evt === undefined){
+      return;
+    }
+
+    this.setState({isLoadingMore: true})
+    this.props.load_more(this._data, this.addNewData.bind(this))
+  }
+
   render() {
     return (
       <ListView
         dataSource={this.state.dataSource}
         renderRow={this.renderRow.bind(this)}
         renderHeader={this.renderHeader.bind(this)}
+        renderFooter={this.renderFooter.bind(this)}
+        onEndReached={this.onEndReached.bind(this)}
+        onEndReachedThreshold={10}
+        scrollRenderAheadDistance={10}
       />
     );
   }
