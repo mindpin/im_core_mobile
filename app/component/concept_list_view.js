@@ -5,6 +5,7 @@ import {
   Text,
   View,
   ListView,
+  TouchableOpacity,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -58,7 +59,8 @@ class ConceptListView extends React.Component {
     this._data = Array.from(this.props.data)
     this.state = {
       dataSource: this.dataSource.cloneWithRows(this._data),
-      isLoadingMore: false
+      isLoadingMore: false,
+      isSort: true
     }
   }
 
@@ -68,6 +70,39 @@ class ConceptListView extends React.Component {
       isLoadingMore: false,
       dataSource: this.dataSource.cloneWithRows(this._data),
     })
+  }
+
+  field_sort(field_name) {
+    tem_ary = this.props.data;
+    change_boolean = this.state.isSort;
+    this.setState({
+      dataSource: this.dataSource.cloneWithRows(tem_ary.sort(
+        function(o,p){
+          if (typeof o === "object" && typeof p === "object" && o && p) {
+            const a = o[field_name];
+            const b = p[field_name];
+            if (a === b) {
+              return 0;
+            }
+            if (typeof a === typeof b) {
+              if(change_boolean === false){
+                return a > b ? -1 : 1;
+              }else{
+                return a < b ? -1 : 1;
+              }
+            }
+            if(change_boolean === false){
+              return typeof a > typeof b ? -1 : 1;
+            }else{
+              return typeof a < typeof b ? -1 : 1;
+            }
+          }else {
+            throw ("error");
+          }
+        }
+      )),
+      isSort: !change_boolean
+    });
   }
 
   renderRow(rowData) {
@@ -90,13 +125,25 @@ class ConceptListView extends React.Component {
     return(
       <View style={styles.header_view}>
         <View style={styles.header_c1}>
-          <Text>{this.props.dimension_define.name_fiels.label}</Text>
+          <TouchableOpacity onPress={() => {
+            this.field_sort(this.props.dimension_define.name_fiels.field)
+          }}>
+            <Text>{this.props.dimension_define.name_fiels.label}</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.header_c2}>
-          <Text>{this.props.dimension_define.dimension_fields[0].label}</Text>
+          <TouchableOpacity onPress={() => {
+            this.field_sort(this.props.dimension_define.dimension_fields[0].field)
+          }}>
+            <Text>{this.props.dimension_define.dimension_fields[0].label}</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.header_c3}>
-          <Text>{this.props.dimension_define.dimension_fields[1].label}</Text>
+          <TouchableOpacity onPress={() => {
+            this.field_sort(this.props.dimension_define.dimension_fields[1].field)
+          }}>
+            <Text>{this.props.dimension_define.dimension_fields[1].label}</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
