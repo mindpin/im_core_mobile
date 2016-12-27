@@ -52,6 +52,12 @@ const styles = StyleSheet.create({
   }
 });
 
+const SORT_TYPE = {
+  UP: "UP",
+  DOWN: "DOWN",
+  NONE: "NONE",
+}
+
 class ConceptListView extends React.Component {
   constructor(props) {
     super(props)
@@ -60,7 +66,7 @@ class ConceptListView extends React.Component {
     this.state = {
       dataSource: this.dataSource.cloneWithRows(this._data),
       isLoadingMore: false,
-      isSort: true
+      sortType: SORT_TYPE.NONE,
     }
   }
 
@@ -73,36 +79,39 @@ class ConceptListView extends React.Component {
   }
 
   field_sort(field_name) {
-    tem_ary = this.props.data;
-    change_boolean = this.state.isSort;
+    let item_array = this.props.data;
+    let next_sort_type = this.get_next_sort_type(this.state.sortType)
+
     this.setState({
-      dataSource: this.dataSource.cloneWithRows(tem_ary.sort(
-        function(o,p){
-          if (typeof o === "object" && typeof p === "object" && o && p) {
-            const a = o[field_name];
-            const b = p[field_name];
-            if (a === b) {
-              return 0;
-            }
-            if (typeof a === typeof b) {
-              if(change_boolean === false){
-                return a > b ? -1 : 1;
-              }else{
-                return a < b ? -1 : 1;
-              }
-            }
-            if(change_boolean === false){
-              return typeof a > typeof b ? -1 : 1;
-            }else{
-              return typeof a < typeof b ? -1 : 1;
-            }
-          }else {
-            throw ("error");
-          }
-        }
-      )),
-      isSort: !change_boolean
+      dataSource: this.dataSource.cloneWithRows(item_array.sort((o,p)=>{
+        return this.data_sort(o,p, field_name, next_sort_type)
+      })),
+      sortType: next_sort_type
     });
+  }
+
+  get_next_sort_type(type) {
+    let types = [SORT_TYPE.UP, SORT_TYPE.DOWN]
+    let index = types.indexOf(type)
+    let next_index = (index + 1) % 2
+    return types[next_index]
+  }
+
+  data_sort(o, p, field_name, sort_type) {
+    let a = o[field_name];
+    let b = p[field_name];
+
+    if (a === b) {
+      return 0;
+    }
+
+    if(sort_type === SORT_TYPE.DOWN){
+      return a > b ? -1 : 1;
+    }else if(sort_type === SORT_TYPE.UP){
+      return a > b ? 1 : -1;
+    }
+
+    return 0;
   }
 
   renderRow(rowData) {
