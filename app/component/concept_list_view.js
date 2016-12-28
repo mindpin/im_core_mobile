@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/FontAwesome'
+
 const styles = StyleSheet.create({
   root: {
     backgroundColor: "#fff",
@@ -35,13 +37,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   header_c1: {
-    flex: 1
+    flex: 1,
+    flexDirection: "row",
   },
   header_c2: {
-    flex: 1
+    flex: 1,
+    flexDirection: "row",
   },
   header_c3: {
-    flex: 1
+    flex: 1,
+    flexDirection: "row",
   },
   footer_view: {
     padding: 15,
@@ -49,6 +54,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#0003",
     flexDirection: "row",
     justifyContent: "center",
+  },
+  sort_icon:{
+    marginTop: 5,
   }
 });
 
@@ -66,7 +74,9 @@ class ConceptListView extends React.Component {
     this.state = {
       dataSource: this.dataSource.cloneWithRows(this._data),
       isLoadingMore: false,
-      sortType: SORT_TYPE.NONE,
+      bookSortType: SORT_TYPE.NONE,
+      authSortType: SORT_TYPE.NONE,
+      priceSortType: SORT_TYPE.NONE,
     }
   }
 
@@ -80,13 +90,30 @@ class ConceptListView extends React.Component {
 
   field_sort(field_name) {
     let item_array = this.props.data;
-    let next_sort_type = this.get_next_sort_type(this.state.sortType)
+    let sort_type = '';
+    let next_book_sort_type = 'NONE';
+    let next_auth_sort_type = 'NONE';
+    let next_price_sort_type = 'NONE';
+    if(field_name == this.props.dimension_define.name_fiels.field){
+      next_book_sort_type = this.get_next_sort_type(this.state.bookSortType)
+      sort_type = next_book_sort_type;
+    }
+    if(field_name == this.props.dimension_define.dimension_fields[0].field){
+      next_auth_sort_type = this.get_next_sort_type(this.state.authSortType)
+      sort_type = next_auth_sort_type;
+    }
+    if(field_name == this.props.dimension_define.dimension_fields[1].field){
+      next_price_sort_type = this.get_next_sort_type(this.state.priceSortType)
+      sort_type = next_price_sort_type;
+    } 
 
     this.setState({
       dataSource: this.dataSource.cloneWithRows(item_array.sort((o,p)=>{
-        return this.data_sort(o,p, field_name, next_sort_type)
+        return this.data_sort(o,p, field_name, sort_type)
       })),
-      sortType: next_sort_type
+      bookSortType: next_book_sort_type,
+      authSortType: next_auth_sort_type,
+      priceSortType: next_price_sort_type,
     });
   }
 
@@ -130,28 +157,71 @@ class ConceptListView extends React.Component {
     )
   }
 
+  pic_type(type){
+    let pic_type_ary = [];
+    if(type == SORT_TYPE.UP){
+      pic_type_ary.push(
+        <Icon name="sort-asc" style={styles.sort_icon}/>
+      )
+    }else if(type == SORT_TYPE.DOWN){
+      pic_type_ary.push(
+        <Icon name="sort-desc" style={styles.sort_icon}/>
+      )
+    }else if(type == SORT_TYPE.NONE){
+      pic_type_ary.push(
+        <Icon name="sort" style={styles.sort_icon}/>
+      )
+    }
+    return pic_type_ary;
+  }
+
   renderHeader() {
+    let book_icon_ary = [];
+    let auth_icon_ary = [];
+    let price_icon_ary = [];
+    if (this.props.dimension_define.name_fiels.field == "book_title") {
+      book_icon_ary = this.pic_type(this.state.bookSortType);
+    }
+    if (this.props.dimension_define.dimension_fields[0].field == "author") {
+      auth_icon_ary = this.pic_type(this.state.authSortType);
+    }
+    if (this.props.dimension_define.dimension_fields[1].field == "price") {
+      price_icon_ary = this.pic_type(this.state.priceSortType);
+    }
+
     return(
       <View style={styles.header_view}>
         <View style={styles.header_c1}>
-          <TouchableOpacity onPress={() => {
-            this.field_sort(this.props.dimension_define.name_fiels.field)
-          }}>
+          <TouchableOpacity 
+            style={styles.header_c1}
+            onPress={() => {
+              this.field_sort(this.props.dimension_define.name_fiels.field)
+            }}
+          >
             <Text>{this.props.dimension_define.name_fiels.label}</Text>
+            {book_icon_ary}
           </TouchableOpacity>
         </View>
         <View style={styles.header_c2}>
-          <TouchableOpacity onPress={() => {
-            this.field_sort(this.props.dimension_define.dimension_fields[0].field)
-          }}>
+          <TouchableOpacity 
+            style={styles.header_c2}
+            onPress={() => {
+              this.field_sort(this.props.dimension_define.dimension_fields[0].field)
+            }}
+          >
             <Text>{this.props.dimension_define.dimension_fields[0].label}</Text>
+            {auth_icon_ary}
           </TouchableOpacity>
         </View>
         <View style={styles.header_c3}>
-          <TouchableOpacity onPress={() => {
-            this.field_sort(this.props.dimension_define.dimension_fields[1].field)
-          }}>
+          <TouchableOpacity 
+            style={styles.header_c3}
+            onPress={() => {
+              this.field_sort(this.props.dimension_define.dimension_fields[1].field)
+            }}
+          >
             <Text>{this.props.dimension_define.dimension_fields[1].label}</Text>
+            {price_icon_ary}
           </TouchableOpacity>
         </View>
       </View>
